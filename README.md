@@ -2,6 +2,12 @@ A demo management system of teachers' information which is implemented in Python
 
 一个简易的教师信息管理系统，用Python和TypeScript实现。
 
+# 😗Dependency Installation
+
+Make sure you have python3 installed, preferably python 3.12.3+.
+
+请安装Python3，最好是3.12.3及以上的版本。
+
 # 🚀How to run?
 
 1. **Run Picture Server:**
