@@ -42,7 +42,7 @@
       "_$type": "List",
       "name": "List",
       "x": 256,
-      "y": 144,
+      "y": 174,
       "width": 1368,
       "height": 782,
       "_mouseState": 2,
@@ -151,13 +151,13 @@
       "_$id": "alpj6q6e",
       "_$type": "HBox",
       "name": "HBox",
-      "x": 419,
-      "y": 35.49999999999994,
-      "width": 1082,
+      "x": 295,
+      "y": 65.49999999999994,
+      "width": 1285,
       "height": 76,
       "_mouseState": 2,
-      "centerX": 0,
-      "space": 104,
+      "centerX": -23,
+      "space": 36,
       "align": "middle",
       "_$child": [
         {
@@ -187,7 +187,7 @@
           "_$var": true,
           "_$type": "Button",
           "name": "Bsearch",
-          "x": 920,
+          "x": 852,
           "y": 10,
           "width": 158,
           "height": 56,
@@ -199,6 +199,36 @@
           "labelColors": "#ffffff,#ffffff,#ffffff",
           "labelAlign": "center",
           "labelVAlign": "middle",
+          "_$comp": [
+            {
+              "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+              "scriptPath": "../src/Button_pointer.ts"
+            }
+          ]
+        },
+        {
+          "_$id": "k27l3drj",
+          "_$var": true,
+          "_$type": "ComboBox",
+          "name": "selectBox1",
+          "x": 1046,
+          "y": 16.5,
+          "width": 224,
+          "height": 43,
+          "_mouseState": 2,
+          "skin": "res://4d91c816-a493-4d44-b515-21a863ac9b42",
+          "labels": "无筛选,航天学院,电子与信息工程学院,机电工程学院,材料科学与工程学院,能源科学与工程学院,电气工程及自动化学院,仪器科学与工程学院,数学学院,物理学院,经济与管理学院,外国语学院,社会科学学院,马克思主义学院,土木工程学院,环境学院,建筑与设计学院,交通科学与工程学院,计算学部,计算机科学与技术学院,人工智能学院,国家示范性软件学院,网络空间安全学院,化工与化学学院,医学与健康学院,生命科学与技术学院,未来技术学院,创新创业学院,体育部,空间环境与物质科学研究院（国家大科学工程）,哈尔滨工业大学（威海）,哈尔滨工业大学（深圳）,深圳国际设计学院",
+          "labelFont": "SourceHanSansSC-Regular",
+          "labelSize": 18,
+          "labelColors": "#000000,#000000,#000000",
+          "itemSize": 18,
+          "itemColors": "#5e95b6,#ffffff,#000000,#8fa4b1,#ffffff",
+          "visibleNum": 18,
+          "scrollType": 2,
+          "scrollBarSkin": "",
+          "selectedIndex": 0,
+          "selectedLabel": "无筛选",
+          "defaultLabel": "",
           "_$comp": [
             {
               "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",

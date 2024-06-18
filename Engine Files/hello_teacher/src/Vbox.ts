@@ -44,7 +44,7 @@ export class Vbox extends Laya.Script {
         if (ifchange==null || ifchange.if_text_change=='false'){
             return
         }
-        else if(Laya.LocalStorage.getJSON('save_change').if_text_change=='true11'){
+        else if(Laya.LocalStorage.getJSON('save_change').if_text_change=='true11111'){
             var belong = ifchange.change_belong
             var text = ifchange.change_text
             var time = ifchange.change_time

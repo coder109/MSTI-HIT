@@ -38,12 +38,13 @@ export class update_self extends Laya.Script {
                 Laya.LocalStorage.setJSON('save_change',{'if_text_change': ifchange.if_text_change+'1','change_belong':belong,'change_text':text,'change_time':time});
             }
             else if(this.belong_text.substring(this.belong_text.length-5,this.belong_text.length)=='-time'){
-                if(this.belong_text.substring(0,this.belong_text.length-5)==belong.substring(0,belong.length-2)){
-                    this.owner.text = time;
-                    Laya.LocalStorage.setJSON('save_change',{'if_text_change': ifchange.if_text_change+'1','change_belong':belong,'change_text':text,'change_time':time});
-                }
+                // if(this.belong_text.substring(0,this.belong_text.length-5)==belong.substring(0,belong.length-2)){
+                //     this.owner.text = time;
+                //     Laya.LocalStorage.setJSON('save_change',{'if_text_change': ifchange.if_text_change+'1','change_belong':belong,'change_text':text,'change_time':time});
+                // }
+                this.owner.text = time;
+                Laya.LocalStorage.setJSON('save_change',{'if_text_change': ifchange.if_text_change+'1','change_belong':belong,'change_text':text,'change_time':time});
             }
-
         }
     }
 

@@ -39,9 +39,14 @@ export class search_list extends search_listBase {
                 // }
             var text = this.search_input.text;
             this.search_input.text = this.search_input.text + '  正在搜索...'
+
+            var select_label = this.selectBox1.selectedLabel
+            if (select_label == '无筛选'){
+                select_label='all'
+            }
             var data = {
                 'text': text,
-                'filter': ''
+                'filter': select_label
             }
             this.send_post_and_get_return('api/search', data, this.search_callback);
         }

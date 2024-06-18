@@ -96,6 +96,7 @@ export class teacher_base extends teacher_baseBase {
         this.Bselect4.on(Laya.Event.CLICK, this, this.onSelecte, [3]);
         this.button_list = [this.Bselect1, this.Bselect2, this.Bselect3, this.Bselect4];
         this.Bgoback.on(Laya.Event.CLICK, this, this.click_goback);
+        this.Bdate.on(Laya.Event.CLICK, this, this.click_date);
 
     }
 
@@ -114,6 +115,43 @@ export class teacher_base extends teacher_baseBase {
             Laya.Scene.open(this.from, false)
         }
         Laya.Scene.destroy('teacher_base.ls')
+    }
+
+    click_date(): void{
+        if(this.Bdate.label="预约"){
+            Laya.Scene.open('date.ls', false, this.Tid)
+        }
+        else{
+            var data = {'teacher_id': this.Tid}
+            this.send_post_and_get_return('api/getdate_list', data, this.goto_date_callback);
+        }
+
+    }
+    
+    goto_date_callback(data:any): void{
+        var date_no_list = data['date_no_list'];
+        if (date_no_list.length == 0){
+            Laya.LocalStorage.setItem('diglogparam','暂无预约记录')
+            Laya.Scene.open('resources/dialog.lh', false)
+        }
+        else{
+            data['teacher_id'] = this.Tid;
+            Laya.Scene.open('date_list.ls', false, data)
+        }
+    }
+
+    send_post_and_get_return(url:string, data:any, callback:any): void{
+        var xhr = new Laya.HttpRequest();
+        xhr.http.timeout = 2500;//设置超时时间；
+        xhr.once(Laya.Event.COMPLETE, this, callback);
+        xhr.once(Laya.Event.ERROR, this, this.httpRequestError);
+        xhr.send('http://101.42.182.89:9876/'+ url, data, 'post', 'json');
+    }
+
+    httpRequestError(e:any): void{
+        console.log(e);
+        Laya.LocalStorage.setItem('diglogparam','网络错误，请稍后再试')
+        Laya.Scene.open('resources/dialog.lh', false)
     }
 
 }

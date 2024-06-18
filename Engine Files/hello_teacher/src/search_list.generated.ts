@@ -8,5 +8,6 @@ export class search_listBase extends Laya.Scene {
     public List!: Laya.List;
     public search_input!: Laya.TextInput;
     public Bsearch!: Laya.Button;
+    public selectBox1!: Laya.ComboBox;
 }
 

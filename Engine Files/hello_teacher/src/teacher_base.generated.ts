@@ -40,5 +40,6 @@ export class teacher_baseBase extends Laya.Scene {
     public Lenroll2!: Laya.Label;
     //public Bchange!: Laya.Button;
     public Lenroll3!: Laya.Label;
+    public Bdate!: Laya.Button;
 }
 
