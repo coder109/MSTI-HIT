@@ -193,7 +193,7 @@ class MainDatabase:
         if t_id is not None:
             self.cursor.execute('''SELECT * FROM TEACHER WHERE ID = ?''', (t_id, ))
         elif name is not None:
-            self.cursor.execute('''SELECT * FROM TEACHER WHERE NAME = ?''', (name, ))
+            self.cursor.execute('''SELECT * FROM TEACHER WHERE NAME LIKE ?''', ('%'+name+'%', ))
         elif gender is not None:
             self.cursor.execute('''SELECT * FROM TEACHER WHERE GENDER = ?''', (gender, ))
         elif age is not None:
@@ -379,5 +379,4 @@ if __name__ == "__main__":
     database.create_teacher(4, "杨大易", 'M', 96, "计算机科学与技术", "111111111")
 
     database.query_teacher(update_time="NOT INIT")
-
-    print(database.login("111111111", database.query_teacher(4)))
+    print(database.query_teacher(name="大"))

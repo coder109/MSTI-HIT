@@ -8,6 +8,18 @@ Make sure you have python3 installed, preferably python 3.12.3+.
 
 请安装Python3，最好是3.12.3及以上的版本。
 
+# 😯What have we implemented?
+
+- [x] Basic User Interface
+- [x] Search Bar
+  - [x] Fuzzy Search
+- [x] Upload Avatars
+- [x] Update Information of teachers
+- [x] Appointment with teachers
+  - [x] Email System
+- [x] Simple Recommendation System
+- [ ] ...
+
 # 🚀How to run?
 
 1. **Run Picture Server:**
