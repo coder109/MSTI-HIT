@@ -151,7 +151,13 @@
           "labelSize": 38,
           "labelColors": "#ffffff,#ffffff,#ffffff",
           "labelAlign": "center",
-          "labelVAlign": "middle"
+          "labelVAlign": "middle",
+          "_$comp": [
+            {
+              "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+              "scriptPath": "../src/Button_pointer.ts"
+            }
+          ]
         },
         {
           "_$id": "dg6uv01i",
@@ -170,7 +176,13 @@
           "labelSize": 38,
           "labelColors": "#ffffff,#ffffff,#ffffff",
           "labelAlign": "center",
-          "labelVAlign": "middle"
+          "labelVAlign": "middle",
+          "_$comp": [
+            {
+              "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+              "scriptPath": "../src/Button_pointer.ts"
+            }
+          ]
         },
         {
           "_$id": "vqv9wqzp",
@@ -189,7 +201,13 @@
           "labelSize": 38,
           "labelColors": "#ffffff,#ffffff,#ffffff",
           "labelAlign": "center",
-          "labelVAlign": "middle"
+          "labelVAlign": "middle",
+          "_$comp": [
+            {
+              "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+              "scriptPath": "../src/Button_pointer.ts"
+            }
+          ]
         },
         {
           "_$id": "0q33qx2x",
@@ -208,7 +226,13 @@
           "labelSize": 38,
           "labelColors": "#ffffff,#ffffff,#ffffff",
           "labelAlign": "center",
-          "labelVAlign": "middle"
+          "labelVAlign": "middle",
+          "_$comp": [
+            {
+              "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+              "scriptPath": "../src/Button_pointer.ts"
+            }
+          ]
         }
       ]
     },
@@ -1421,6 +1445,31 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "_$id": "tqa8ljdr",
+      "_$var": true,
+      "_$type": "Button",
+      "name": "Bdate",
+      "x": 1570,
+      "y": 189,
+      "width": 147,
+      "height": 54,
+      "_mouseState": 2,
+      "right": 203,
+      "skin": "res://92a393b3-d00c-4486-ae48-e233dc5b8c37",
+      "label": "预约",
+      "labelFont": "SourceHanSansSC-Regular",
+      "labelSize": 22,
+      "labelColors": "#ffffff,#ffffff,#ffffff",
+      "labelAlign": "center",
+      "labelVAlign": "middle",
+      "_$comp": [
+        {
+          "_$type": "19f5d462-32f2-4f49-8fc8-389155b2efe7",
+          "scriptPath": "../src/Bdate.ts"
         }
       ]
     }
