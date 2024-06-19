@@ -11,7 +11,7 @@ export class search_list extends search_listBase {
 
         var data2push = [];
         for (var i = 0; i < teacher_id.length; i++) {
-            data2push.push({teacher_msg: teacher_name[i] + ' ' + belong_to[i], teacher_pic: "http://101.42.182.89:8000"+pic_url[i].substring(1,pic_url[i].length).replace("\\","/"), teacher_id: teacher_id[i]});
+            data2push.push({teacher_msg: teacher_name[i] + ' ' + belong_to[i], teacher_pic: "http://101.42.182.89:8848"+pic_url[i].substring(1,pic_url[i].length).replace("\\","/"), teacher_id: teacher_id[i]});
         }
         this.List.array = data2push;
     }

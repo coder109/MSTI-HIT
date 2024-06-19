@@ -20,7 +20,7 @@ export class hello extends helloBase {
         this.selectBox2.on(Laya.Event.CHANGE,this,this.get_hot_teacher_list, [this.selectBox2.selectedLabel]);
         
         this.Blogin.on(Laya.Event.CLICK,this,this.click_login);
-        // this.Iteacher1.skin='http://127.0.0.1:8000/20200706204152_gouvc.jpg'; just for example
+        // this.Iteacher1.skin='http://127.0.0.1:8848/20200706204152_gouvc.jpg'; just for example
         this.check_login();
 
         // var data:{[key:string]:Array<string>} = {};
@@ -32,14 +32,14 @@ export class hello extends helloBase {
         // var teacher_name = data['teacher_name'];
         // var pic_url = data['pic_url'];
         // var belong_to = data['belong_to'];
-        // this.Iteacher1.skin = "http://101.42.182.89:8000"+pic_url[0].substring(1,pic_url[0].length).replace("\\","/")
-        // this.Iteacher2.skin = "http://101.42.182.89:8000"+pic_url[1].substring(1,pic_url[1].length).replace("\\","/")
-        // this.Iteacher3.skin = "http://101.42.182.89:8000"+pic_url[2].substring(1,pic_url[2].length).replace("\\","/")
-        // this.Iteacher4.skin = "http://101.42.182.89:8000"+pic_url[3].substring(1,pic_url[3].length).replace("\\","/")
-        // this.Iteacher5.skin = "http://101.42.182.89:8000"+pic_url[4].substring(1,pic_url[4].length).replace("\\","/")
-        // this.Iteacher6.skin = "http://101.42.182.89:8000"+pic_url[5].substring(1,pic_url[5].length).replace("\\","/")
-        // this.Iteacher7.skin = "http://101.42.182.89:8000"+pic_url[6].substring(1,pic_url[6].length).replace("\\","/")
-        // this.Iteacher8.skin = "http://101.42.182.89:8000"+pic_url[7].substring(1,pic_url[7].length).replace("\\","/")
+        // this.Iteacher1.skin = "http://101.42.182.89:8848"+pic_url[0].substring(1,pic_url[0].length).replace("\\","/")
+        // this.Iteacher2.skin = "http://101.42.182.89:8848"+pic_url[1].substring(1,pic_url[1].length).replace("\\","/")
+        // this.Iteacher3.skin = "http://101.42.182.89:8848"+pic_url[2].substring(1,pic_url[2].length).replace("\\","/")
+        // this.Iteacher4.skin = "http://101.42.182.89:8848"+pic_url[3].substring(1,pic_url[3].length).replace("\\","/")
+        // this.Iteacher5.skin = "http://101.42.182.89:8848"+pic_url[4].substring(1,pic_url[4].length).replace("\\","/")
+        // this.Iteacher6.skin = "http://101.42.182.89:8848"+pic_url[5].substring(1,pic_url[5].length).replace("\\","/")
+        // this.Iteacher7.skin = "http://101.42.182.89:8848"+pic_url[6].substring(1,pic_url[6].length).replace("\\","/")
+        // this.Iteacher8.skin = "http://101.42.182.89:8848"+pic_url[7].substring(1,pic_url[7].length).replace("\\","/")
         // this.Lteacher1.text = teacher_name[0] + '\n' + belong_to[0];
         // this.Lteacher2.text = teacher_name[1] + '\n' + belong_to[1];
         // this.Lteacher3.text = teacher_name[2] + '\n' + belong_to[2];
@@ -73,14 +73,14 @@ export class hello extends helloBase {
         var teacher_name = data['teacher_name'];
         var pic_url = data['pic_url'];
         var belong_to = data['belong_to'];
-        this.Iteacher1.skin = "http://101.42.182.89:8000"+pic_url[0].substring(1,pic_url[0].length).replace("\\","/")
-        this.Iteacher2.skin = "http://101.42.182.89:8000"+pic_url[1].substring(1,pic_url[1].length).replace("\\","/")
-        this.Iteacher3.skin = "http://101.42.182.89:8000"+pic_url[2].substring(1,pic_url[2].length).replace("\\","/")
-        this.Iteacher4.skin = "http://101.42.182.89:8000"+pic_url[3].substring(1,pic_url[3].length).replace("\\","/")
-        this.Iteacher5.skin = "http://101.42.182.89:8000"+pic_url[4].substring(1,pic_url[4].length).replace("\\","/")
-        this.Iteacher6.skin = "http://101.42.182.89:8000"+pic_url[5].substring(1,pic_url[5].length).replace("\\","/")
-        this.Iteacher7.skin = "http://101.42.182.89:8000"+pic_url[6].substring(1,pic_url[6].length).replace("\\","/")
-        this.Iteacher8.skin = "http://101.42.182.89:8000"+pic_url[7].substring(1,pic_url[7].length).replace("\\","/")
+        this.Iteacher1.skin = "http://101.42.182.89:8848"+pic_url[0].substring(1,pic_url[0].length).replace("\\","/")
+        this.Iteacher2.skin = "http://101.42.182.89:8848"+pic_url[1].substring(1,pic_url[1].length).replace("\\","/")
+        this.Iteacher3.skin = "http://101.42.182.89:8848"+pic_url[2].substring(1,pic_url[2].length).replace("\\","/")
+        this.Iteacher4.skin = "http://101.42.182.89:8848"+pic_url[3].substring(1,pic_url[3].length).replace("\\","/")
+        this.Iteacher5.skin = "http://101.42.182.89:8848"+pic_url[4].substring(1,pic_url[4].length).replace("\\","/")
+        this.Iteacher6.skin = "http://101.42.182.89:8848"+pic_url[5].substring(1,pic_url[5].length).replace("\\","/")
+        this.Iteacher7.skin = "http://101.42.182.89:8848"+pic_url[6].substring(1,pic_url[6].length).replace("\\","/")
+        this.Iteacher8.skin = "http://101.42.182.89:8848"+pic_url[7].substring(1,pic_url[7].length).replace("\\","/")
         this.Lteacher1.text = teacher_name[0] + '\n' + belong_to[0];
         this.Lteacher2.text = teacher_name[1] + '\n' + belong_to[1];
         this.Lteacher3.text = teacher_name[2] + '\n' + belong_to[2];
