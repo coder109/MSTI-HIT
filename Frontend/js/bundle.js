@@ -138,8 +138,52 @@
     regClass2("JJUo1JeGSiu3bWhdEaW0fg")
   ], Bclose);
 
-  // src/Button_pointer.ts
+  // src/Bdate.ts
   var { regClass: regClass3, property: property3 } = Laya;
+  var Bdate = class extends Laya.Script {
+    //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
+    //onAwake(): void {}
+    //组件被启用后执行，例如节点被添加到舞台后
+    // onEnable(): void {}
+    //组件被禁用时执行，例如从节点从舞台移除后
+    //onDisable(): void {}
+    //第一次执行update之前执行，只会执行一次
+    //onStart(): void {}
+    //手动调用节点销毁时执行
+    //onDestroy(): void {}
+    //每帧更新时执行，尽量不要在这里写大循环逻辑或者使用getComponent方法
+    onUpdate() {
+      var islogin = Laya.LocalStorage.getItem("login");
+      if (islogin == null) {
+        islogin = "false";
+      }
+      if (islogin == "false") {
+        this.owner.label = "预约";
+      } else {
+        var user_id = Laya.LocalStorage.getItem("username");
+        var now_id = Laya.LocalStorage.getItem("nowpageid");
+        if (user_id == null) {
+          this.owner.label = "预约";
+        } else {
+          if (user_id == now_id) {
+            this.owner.label = "预约管理";
+            this.owner.skin = "resources/btn_r.png";
+          }
+        }
+      }
+    }
+    //每帧更新时执行，在update之后执行，尽量不要在这里写大循环逻辑或者使用getComponent方法
+    //onLateUpdate(): void {}
+    //鼠标点击后执行。与交互相关的还有onMouseDown等十多个函数，具体请参阅文档。
+    //onMouseClick(): void {}
+  };
+  __name(Bdate, "Bdate");
+  Bdate = __decorateClass([
+    regClass3("GfXUYjLyT0mPyDiRVbLv5w")
+  ], Bdate);
+
+  // src/Button_pointer.ts
+  var { regClass: regClass4, property: property4 } = Laya;
   var Button_pointer = class extends Laya.Script {
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake() {
@@ -169,11 +213,11 @@
   };
   __name(Button_pointer, "Button_pointer");
   Button_pointer = __decorateClass([
-    regClass3("hDaNyyZ_Rjaj06MCYvkvPg")
+    regClass4("hDaNyyZ_Rjaj06MCYvkvPg")
   ], Button_pointer);
 
   // src/Vbox.ts
-  var { regClass: regClass4, property: property4 } = Laya;
+  var { regClass: regClass5, property: property5 } = Laya;
   var Vbox = class extends Laya.Script {
     constructor() {
       super(...arguments);
@@ -209,7 +253,7 @@
       var ifchange = Laya.LocalStorage.getJSON("save_change");
       if (ifchange == null || ifchange.if_text_change == "false") {
         return;
-      } else if (Laya.LocalStorage.getJSON("save_change").if_text_change == "true11") {
+      } else if (Laya.LocalStorage.getJSON("save_change").if_text_change == "true11111") {
         var belong = ifchange.change_belong;
         var text = ifchange.change_text;
         var time = ifchange.change_time;
@@ -234,10 +278,10 @@
   };
   __name(Vbox, "Vbox");
   __decorateClass([
-    property4(String)
+    property5(String)
   ], Vbox.prototype, "belong", 2);
   Vbox = __decorateClass([
-    regClass4("rwXm57ENRXOmxGM849-czA")
+    regClass5("rwXm57ENRXOmxGM849-czA")
   ], Vbox);
 
   // src/change_text.generated.ts
@@ -247,7 +291,7 @@
   var change_textBase = _change_textBase;
 
   // src/change_text.ts
-  var { regClass: regClass5 } = Laya;
+  var { regClass: regClass6 } = Laya;
   var change_text = class extends change_textBase {
     onAwake() {
       this.title_dict = { "base_msg-A": "个人信息简介", "base_msg-B": "个人荣誉及任职", "base_msg-C": "教育工作经历", "date_msg-A": "第一周日程安排", "date_msg-B": "第二周日程安排", "sci_msg-A": "研究方向1", "sci_msg-B": "研究方向2", "sci_msg-C": "研究方向3", "enroll_msg-A": "招生要求", "enroll_msg-B": "招生计划", "enroll_msg-C": "招生情况" };
@@ -343,7 +387,7 @@
   };
   __name(change_text, "change_text");
   change_text = __decorateClass([
-    regClass5("jNNvlCs8QsGyq7eomgppwA")
+    regClass6("jNNvlCs8QsGyq7eomgppwA")
   ], change_text);
 
   // src/dialog.generated.ts
@@ -353,7 +397,7 @@
   var dialogBase = _dialogBase;
 
   // src/dialog.ts
-  var { regClass: regClass6 } = Laya;
+  var { regClass: regClass7 } = Laya;
   var dialog = class extends dialogBase {
     onAwake() {
       var param = Laya.LocalStorage.getItem("diglogparam");
@@ -369,7 +413,7 @@
   };
   __name(dialog, "dialog");
   dialog = __decorateClass([
-    regClass6("92Z-JkEcTIOS4aqAqSCDTw")
+    regClass7("92Z-JkEcTIOS4aqAqSCDTw")
   ], dialog);
 
   // src/hello.generated.ts
@@ -379,20 +423,52 @@
   var helloBase = _helloBase;
 
   // src/hello.ts
-  var { regClass: regClass7 } = Laya;
+  var { regClass: regClass8 } = Laya;
   var hello = class extends helloBase {
     onAwake() {
-      this.get_hot_teacher_list();
+      this.get_hot_teacher_list("all");
       this.Bsearch.on(Laya.Event.CLICK, this, this.click_search);
       this.Iteacher1.on(Laya.Event.CLICK, this, this.goto_teacher, [0]);
       this.Iteacher2.on(Laya.Event.CLICK, this, this.goto_teacher, [1]);
       this.Iteacher3.on(Laya.Event.CLICK, this, this.goto_teacher, [2]);
       this.Iteacher4.on(Laya.Event.CLICK, this, this.goto_teacher, [3]);
+      this.Iteacher5.on(Laya.Event.CLICK, this, this.goto_teacher, [4]);
+      this.Iteacher6.on(Laya.Event.CLICK, this, this.goto_teacher, [5]);
+      this.Iteacher7.on(Laya.Event.CLICK, this, this.goto_teacher, [6]);
+      this.Iteacher8.on(Laya.Event.CLICK, this, this.goto_teacher, [7]);
+      this.selectBox2.on(Laya.Event.CHANGE, this, this.get_hot_teacher_list, [this.selectBox2.selectedLabel]);
       this.Blogin.on(Laya.Event.CLICK, this, this.click_login);
       this.check_login();
     }
-    get_hot_teacher_list() {
-      this.hot_teacher_list = ["0", "1", "2", "3"];
+    get_hot_teacher_list(belong) {
+      if (belong == "无筛选") {
+        belong = "all";
+      }
+      this.send_post_and_get_return("api/api/gethot", { "belong": belong }, this.get_hot_teacher_list_callback);
+    }
+    get_hot_teacher_list_callback(data) {
+      this.hot_teacher_list = data["teacher_id"];
+      var teacher_name = data["teacher_name"];
+      var pic_url = data["pic_url"];
+      var belong_to = data["belong_to"];
+      this.Iteacher1.skin = "http://101.42.182.89:8848" + pic_url[0].substring(1, pic_url[0].length).replace("\\", "/");
+      this.Iteacher2.skin = "http://101.42.182.89:8848" + pic_url[1].substring(1, pic_url[1].length).replace("\\", "/");
+      this.Iteacher3.skin = "http://101.42.182.89:8848" + pic_url[2].substring(1, pic_url[2].length).replace("\\", "/");
+      this.Iteacher4.skin = "http://101.42.182.89:8848" + pic_url[3].substring(1, pic_url[3].length).replace("\\", "/");
+      this.Iteacher5.skin = "http://101.42.182.89:8848" + pic_url[4].substring(1, pic_url[4].length).replace("\\", "/");
+      this.Iteacher6.skin = "http://101.42.182.89:8848" + pic_url[5].substring(1, pic_url[5].length).replace("\\", "/");
+      this.Iteacher7.skin = "http://101.42.182.89:8848" + pic_url[6].substring(1, pic_url[6].length).replace("\\", "/");
+      this.Iteacher8.skin = "http://101.42.182.89:8848" + pic_url[7].substring(1, pic_url[7].length).replace("\\", "/");
+      this.Lteacher1.text = teacher_name[0] + "\n" + belong_to[0];
+      this.Lteacher2.text = teacher_name[1] + "\n" + belong_to[1];
+      this.Lteacher3.text = teacher_name[2] + "\n" + belong_to[2];
+      this.Lteacher4.text = teacher_name[3] + "\n" + belong_to[3];
+      this.Lteacher5.text = teacher_name[4] + "\n" + belong_to[4];
+      this.Lteacher6.text = teacher_name[5] + "\n" + belong_to[5];
+      this.Lteacher7.text = teacher_name[6] + "\n" + belong_to[6];
+      this.Lteacher8.text = teacher_name[7] + "\n" + belong_to[7];
+      this.HBox1.mouseEnabled = true;
+      this.HBox2.mouseEnabled = true;
     }
     click_search() {
       if (this.search_input.text == "") {
@@ -401,9 +477,13 @@
       } else {
         var text = this.search_input.text;
         this.search_input.text = this.search_input.text + "  正在搜索...";
+        var select_label = this.selectBox1.selectedLabel;
+        if (select_label == "无筛选") {
+          select_label = "all";
+        }
         var data = {
           "text": text,
-          "filter": ""
+          "filter": select_label
         };
         this.send_post_and_get_return("api/search", data, this.search_callback);
       }
@@ -457,6 +537,9 @@
         this.search_input.text = this.search_input.text.substring(0, this.search_input.text.length - 9);
         Laya.LocalStorage.setItem("diglogparam", "未找到相关教师");
         Laya.Scene.open("resources/dialog.lh", false);
+      } else if (e == "[404]NOT FOUND:http://101.42.182.89:9876/api/gethot") {
+        Laya.LocalStorage.setItem("diglogparam", "网络错误，获取热门教师失败");
+        Laya.Scene.open("resources/dialog.lh", false);
       } else {
         Laya.LocalStorage.setItem("diglogparam", "网络错误，请稍后再试");
         Laya.Scene.open("resources/dialog.lh", false);
@@ -475,11 +558,11 @@
   };
   __name(hello, "hello");
   hello = __decorateClass([
-    regClass7("JKKsvS3HQfuryjnjjnKw5w")
+    regClass8("JKKsvS3HQfuryjnjjnKw5w")
   ], hello);
 
   // src/htmldialog.ts
-  var { regClass: regClass8 } = Laya;
+  var { regClass: regClass9 } = Laya;
   var dialog2 = class extends Laya.Script {
     onAwake() {
     }
@@ -493,7 +576,7 @@
   };
   __name(dialog2, "dialog");
   dialog2 = __decorateClass([
-    regClass8("8362mwjbS7COpMGX5NGVVw")
+    regClass9("8362mwjbS7COpMGX5NGVVw")
   ], dialog2);
 
   // src/login.generated.ts
@@ -503,7 +586,7 @@
   var loginBase = _loginBase;
 
   // src/login.ts
-  var { regClass: regClass9 } = Laya;
+  var { regClass: regClass10 } = Laya;
   var login = class extends loginBase {
     onAwake() {
       this.Blogin.on(Laya.Event.CLICK, this, this.click_login);
@@ -554,7 +637,7 @@
   };
   __name(login, "login");
   login = __decorateClass([
-    regClass9("m02wO_bPR92sV729ul0viA")
+    regClass10("m02wO_bPR92sV729ul0viA")
   ], login);
 
   // src/search_list.generated.ts
@@ -564,7 +647,7 @@
   var search_listBase = _search_listBase;
 
   // src/search_list.ts
-  var { regClass: regClass10 } = Laya;
+  var { regClass: regClass11 } = Laya;
   var search_list = class extends search_listBase {
     onOpened(data) {
       var teacher_id = data["teacher_id"];
@@ -573,7 +656,7 @@
       var pic_url = data["pic_url"];
       var data2push = [];
       for (var i = 0; i < teacher_id.length; i++) {
-        data2push.push({ teacher_msg: teacher_name[i] + " " + belong_to[i], teacher_pic: "http://101.42.182.89:8000" + pic_url[i].substring(1, pic_url[i].length).replace("\\", "/"), teacher_id: teacher_id[i] });
+        data2push.push({ teacher_msg: teacher_name[i] + " " + belong_to[i], teacher_pic: "http://101.42.182.89:8848" + pic_url[i].substring(1, pic_url[i].length).replace("\\", "/"), teacher_id: teacher_id[i] });
       }
       this.List.array = data2push;
     }
@@ -587,9 +670,13 @@
       } else {
         var text = this.search_input.text;
         this.search_input.text = this.search_input.text + "  正在搜索...";
+        var select_label = this.selectBox1.selectedLabel;
+        if (select_label == "无筛选") {
+          select_label = "all";
+        }
         var data = {
           "text": text,
-          "filter": ""
+          "filter": select_label
         };
         this.send_post_and_get_return("api/search", data, this.search_callback);
       }
@@ -622,7 +709,7 @@
   };
   __name(search_list, "search_list");
   search_list = __decorateClass([
-    regClass10("zd5B7lc4TZOD057jcPgFIw")
+    regClass11("zd5B7lc4TZOD057jcPgFIw")
   ], search_list);
 
   // src/teacher_base.generated.ts
@@ -632,7 +719,7 @@
   var teacher_baseBase = _teacher_baseBase;
 
   // src/teacher_base.ts
-  var { regClass: regClass11 } = Laya;
+  var { regClass: regClass12 } = Laya;
   var teacher_base = class extends teacher_baseBase {
     onOpened(data) {
       this.from = "hello.ls";
@@ -673,7 +760,7 @@
         Laya.LocalStorage.setItem("diglogparam", "当前教师信息存在缺失");
         Laya.Scene.open("resources/dialog.lh", false);
       }
-      this.Iphoto.skin = "http://101.42.182.89:8000" + this.Iteacher.substring(1, this.Iteacher.length).replace("\\", "/");
+      this.Iphoto.skin = "http://101.42.182.89:8848" + this.Iteacher.substring(1, this.Iteacher.length).replace("\\", "/");
       this.Lname.text = this.Tname;
       this.Lbelong.text = this.Tbelong;
       this.Lintro.text = this.Tintro;
@@ -700,6 +787,7 @@
       this.Bselect4.on(Laya.Event.CLICK, this, this.onSelecte, [3]);
       this.button_list = [this.Bselect1, this.Bselect2, this.Bselect3, this.Bselect4];
       this.Bgoback.on(Laya.Event.CLICK, this, this.click_goback);
+      this.Bdate.on(Laya.Event.CLICK, this, this.click_date);
     }
     onSelecte(index) {
       for (var i = 0; i < this.button_list.length; i++) {
@@ -715,14 +803,44 @@
       }
       Laya.Scene.destroy("teacher_base.ls");
     }
+    click_date() {
+      if (this.Bdate.label = "预约") {
+        Laya.Scene.open("date.ls", false, this.Tid);
+      } else {
+        var data = { "teacher_id": this.Tid };
+        this.send_post_and_get_return("api/getdate_list", data, this.goto_date_callback);
+      }
+    }
+    goto_date_callback(data) {
+      var date_no_list = data["date_no_list"];
+      if (date_no_list.length == 0) {
+        Laya.LocalStorage.setItem("diglogparam", "暂无预约记录");
+        Laya.Scene.open("resources/dialog.lh", false);
+      } else {
+        data["teacher_id"] = this.Tid;
+        Laya.Scene.open("date_list.ls", false, data);
+      }
+    }
+    send_post_and_get_return(url, data, callback) {
+      var xhr = new Laya.HttpRequest();
+      xhr.http.timeout = 2500;
+      xhr.once(Laya.Event.COMPLETE, this, callback);
+      xhr.once(Laya.Event.ERROR, this, this.httpRequestError);
+      xhr.send("http://101.42.182.89:9876/" + url, data, "post", "json");
+    }
+    httpRequestError(e) {
+      console.log(e);
+      Laya.LocalStorage.setItem("diglogparam", "网络错误，请稍后再试");
+      Laya.Scene.open("resources/dialog.lh", false);
+    }
   };
   __name(teacher_base, "teacher_base");
   teacher_base = __decorateClass([
-    regClass11("dvxjFq89TFK78rZ1DJHZ2Q")
+    regClass12("dvxjFq89TFK78rZ1DJHZ2Q")
   ], teacher_base);
 
   // src/teacher_list_box.ts
-  var { regClass: regClass12, property: property5 } = Laya;
+  var { regClass: regClass13, property: property6 } = Laya;
   var teacher_list_box = class extends Laya.Script {
     //组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
     onAwake() {
@@ -776,11 +894,11 @@
   };
   __name(teacher_list_box, "teacher_list_box");
   teacher_list_box = __decorateClass([
-    regClass12("L6P8iXKvTA2oNSN72tMwJA")
+    regClass13("L6P8iXKvTA2oNSN72tMwJA")
   ], teacher_list_box);
 
   // src/update_self.ts
-  var { regClass: regClass13, property: property6 } = Laya;
+  var { regClass: regClass14, property: property7 } = Laya;
   var update_self = class extends Laya.Script {
     constructor() {
       super(...arguments);
@@ -809,10 +927,8 @@
           this.owner.text = text;
           Laya.LocalStorage.setJSON("save_change", { "if_text_change": ifchange.if_text_change + "1", "change_belong": belong, "change_text": text, "change_time": time });
         } else if (this.belong_text.substring(this.belong_text.length - 5, this.belong_text.length) == "-time") {
-          if (this.belong_text.substring(0, this.belong_text.length - 5) == belong.substring(0, belong.length - 2)) {
-            this.owner.text = time;
-            Laya.LocalStorage.setJSON("save_change", { "if_text_change": ifchange.if_text_change + "1", "change_belong": belong, "change_text": text, "change_time": time });
-          }
+          this.owner.text = time;
+          Laya.LocalStorage.setJSON("save_change", { "if_text_change": ifchange.if_text_change + "1", "change_belong": belong, "change_text": text, "change_time": time });
         }
       }
     }
@@ -823,9 +939,9 @@
   };
   __name(update_self, "update_self");
   __decorateClass([
-    property6(String)
+    property7(String)
   ], update_self.prototype, "belong_text", 2);
   update_self = __decorateClass([
-    regClass13("mHEgcCQkQkSpXzjYHnlAGg")
+    regClass14("mHEgcCQkQkSpXzjYHnlAGg")
   ], update_self);
 })();
