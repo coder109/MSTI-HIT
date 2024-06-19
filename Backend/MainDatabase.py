@@ -339,6 +339,21 @@ class MainDatabase:
                 ret_list.append(str(result[8]))
         return ret_list
 
+    def get_result_reservation_list(self, result_list):
+        """
+        获取查询结果的预约列表
+        Args:
+            result_list: 查询结果
+        Returns:
+            查询结果的预约列表
+        """
+        temp_result_list = self.get_result_file_path(result_list)
+        ret_list = []
+        for result_file in temp_result_list:
+            with open(result_file, "r") as f:
+                ret_list.append(json.load(f)["reservation_list"])
+        return ret_list
+
     def count_result(self, result_list):
         """
         统计查询结果的数量
