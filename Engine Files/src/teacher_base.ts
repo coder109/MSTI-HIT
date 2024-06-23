@@ -68,7 +68,7 @@ export class teacher_base extends teacher_baseBase {
             Laya.LocalStorage.setItem('diglogparam','当前教师信息存在缺失')
             Laya.Scene.open('resources/dialog.lh', false)
         }
-        this.Iphoto.skin = 'http://101.42.182.89:8000'+this.Iteacher.substring(1,this.Iteacher.length).replace("\\","/");
+        this.Iphoto.skin = 'http://101.42.182.89:8848'+this.Iteacher.substring(1,this.Iteacher.length).replace("\\","/");
         this.Lname.text = this.Tname;
         this.Lbelong.text = this.Tbelong;
         this.Lintro.text = this.Tintro;
