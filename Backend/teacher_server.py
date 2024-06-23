@@ -1,5 +1,6 @@
 
 import random
+import smtplib
 import uuid
 from datetime import datetime
 
@@ -13,7 +14,10 @@ from ReservationList import ReservationList
 # 应用工厂函数
 def create_app():
     app = Flask(__name__)
+
     app.config['TEACHER_CLICK_COUNT'] = {}  # 初始化一个字典来存储点击量
+    # 初始化邮件发送器
+    app.config['SMTP_SENDER'] = get_sender()
 
     # 配置数据库连接
     @app.before_request
@@ -31,9 +35,6 @@ def create_app():
         if db is not None:
             db.conn.close()
 
-    # 初始化邮件发送器
-    app.config['SMTP_SENDER'] = get_sender()
-
     @app.route('/api/search', methods=['POST'])
     def search():
         data = request.json
@@ -41,13 +42,13 @@ def create_app():
             return jsonify({'message': '请输入要搜索的文本'}), 400
 
         text = data.get('text', '')
-        filter_college = data.get('filter', '')  # 获取学院筛选条件
+        filter_college = data.get('filter', 'all')  # 获取学院筛选条件
         if not text.strip():
             return jsonify({'message': '搜索文本不能为空'}), 400
 
         teachers = g.db.query_teacher(name=text)
         # 如果有学院筛选条件，则进一步筛选
-        if filter_college:
+        if filter_college != 'all':
             teachers = [teacher for teacher in teachers if teacher[4] == filter_college]
         if not teachers:
             return jsonify({'message': '没有找到匹配的教师'}), 404
@@ -303,7 +304,7 @@ def create_app():
                 r_place=location,
                 r_content=description,
                 r_email=email,
-                r_id=generate_reservation_id(),  # 确保此函数存在并正确生成编号
+                r_id=generate_reservation_id(),  # 生成编号
                 r_status=0
             )
 
@@ -332,16 +333,23 @@ def create_app():
             # 生成验证码
             code = ''.join(random.choices('0123456789', k=6))
 
-            # 发送邮件
-            sender = g.db.SMTP_SENDER  # 确保此处正确获取邮件发送器
+            # 获取邮件发送器
+            sender = app.config.get('SMTP_SENDER')
+            if sender is None:
+                # 处理 SMTP_SENDER 未初始化的情况
+                app.logger.error('邮件发送器未初始化')
+                return jsonify({'send_successful': 'false', 'evaluatecode': '邮件发送器未初始化'}), 500
             if sender.sendemail(email, code):
-                # 假设邮件发送成功，存储或记录验证码以便验证
+                # 邮件发送成功，存储或记录验证码以便验证
                 return jsonify({'send_successful': 'true', 'evaluatecode': code}), 200
             else:
                 # 记录日志，返回给用户通用错误信息
                 app.logger.error(f"邮件发送失败：邮箱地址为 {email}")
                 return jsonify({'send_successful': 'false', 'evaluatecode': '邮件发送失败'}), 500
-
+        except smtplib.SMTPException as e:
+            # 记录SMTP异常
+            app.logger.error(f"SMTP 邮件发送异常：{e}")
+            return jsonify({'send_successful': 'false', 'evaluatecode': 'SMTP服务异常'}), 500
         except Exception as e:
             # 日志记录异常信息，返回给用户通用错误信息
             app.logger.error(f"发送邮件时发生错误：{e}")
@@ -475,8 +483,7 @@ def create_app():
             # 将更新后的预约列表写回文件
             relative_file.update_reservation_list(reservation_list)
 
-            # 在 update_date_status 路由中调用 send_reply_email 函数
-            if status in [1, 2, 3]:  # 假设1, 2, 3分别代表接受、拒绝和更改预约信息的状态
+            if status in [1, 2, 3]:  # 1, 2, 3分别代表接受、拒绝和更改预约信息的状态
                 send_reply_email(reservation_to_update['email'], status, reply)
 
             # 更新数据库中的教师更新时间
@@ -503,9 +510,13 @@ def create_app():
                 'teacher_name': []
             }), 400
         try:
-            # 查询指定学院的所有教师信息
-            teachers_in_department = g.db.query_teacher(department=belong)
-            if not teachers_in_department:
+            if belong == 'all':
+                teachers = g.db.query_teacher()
+            else:
+                # 查询指定学院的所有教师信息
+                teachers = g.db.query_teacher(department=belong)
+
+            if not teachers:
                 return jsonify({
                     'message': '没有找到指定学院的教师'
                 }), 404
@@ -513,7 +524,7 @@ def create_app():
             # 根据当前存储的点击量获取热门教师
             teachers_click_count = {
                 str(teacher[0]): app.config['TEACHER_CLICK_COUNT'].get(str(teacher[0]), 0)
-                for teacher in teachers_in_department
+                for teacher in teachers
             }
 
             hot_teachers = sorted(teachers_click_count.items(), key=lambda item: item[1], reverse=True)[:8]
@@ -525,7 +536,7 @@ def create_app():
 
             return jsonify({
                 'teacher_id': teacher_id,
-                'belong_to': belong,
+                'belong_to': belong if belong != 'all' else '全校',
                 'pic_url': pic_url,
                 'teacher_name': teacher_name
             })
