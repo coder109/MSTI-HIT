@@ -125,7 +125,7 @@ class RelativeFile():
                                   r_email=reservation_list["r_email"],
                                   r_id=reservation_list["r_id"],
                                   r_status=reservation_list["r_status"])
-        self.content_dict["reservation_list"].append(tmp_rl.to_dict())
+        self.content_dict["reservation_list"].append(tmp_rl)
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新预约列表成功")
         return True
