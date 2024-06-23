@@ -113,6 +113,23 @@ class RelativeFile():
         print("[Info]更新招生要求成功")
         return True
 
+    def update_reservation_list(self, reservation_list: dict):
+        """
+        更新预约列表
+        Args:
+            reservation_list: 预约列表
+        """
+        tmp_rl = ReservationList(r_time=reservation_list["r_time"],
+                                  r_place=reservation_list["r_place"],
+                                  r_content=reservation_list["r_content"],
+                                  r_email=reservation_list["r_email"],
+                                  r_id=reservation_list["r_id"],
+                                  r_status=reservation_list["r_status"])
+        self.content_dict["reservation_list"].append(tmp_rl.to_dict())
+        format_json_dump(self.content_dict, self.path)
+        print("[Info]更新预约列表成功")
+        return True
+
     def update_reservation_list(self, reservation_list: ReservationList):
         """
         更新预约列表
