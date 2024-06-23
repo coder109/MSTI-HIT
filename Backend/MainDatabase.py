@@ -350,7 +350,7 @@ class MainDatabase:
         temp_result_list = self.get_result_file_path(result_list)
         ret_list = []
         for result_file in temp_result_list:
-            with open(result_file, "r") as f:
+            with open(result_file, "r", encoding="utf-8") as f:
                 ret_list.append(json.load(f)["reservation_list"])
         return ret_list
 
