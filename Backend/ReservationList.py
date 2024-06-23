@@ -25,7 +25,7 @@ class ReservationList():
         if r_time is None or r_place is None or r_content is None or r_email is None or r_id is None or r_status is None:
             print("[Error]提供给预约的参数不全")
             return
-        if r_id < 0 or r_id > 4:
+        if int(r_id) < 0 or int(r_id) > 4:
             print("[Error]预约编号不合法")
             return
         self.r_time = r_time
