@@ -40,6 +40,7 @@ class RelativeFile():
                           "reservation_list": []
                           },
                          self.path)
+        return True
         
     def update_file(self, 
                     base_info=None,
@@ -66,6 +67,7 @@ class RelativeFile():
             self.update_admission_requirement(admission_requirement)
         if reservation_list is not None:
             self.update_reservation_list(reservation_list)
+        return True
 
     def update_base_info(self, base_info):
         """
@@ -76,6 +78,7 @@ class RelativeFile():
         self.content_dict["base_info"] = base_info
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新基本信息成功")
+        return True
 
     def update_recent_schedule(self, recent_schedule):
         """
@@ -86,6 +89,7 @@ class RelativeFile():
         self.content_dict["recent_schedule"] = recent_schedule
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新日程安排成功")
+        return True
 
     def update_academic_result(self, academic_result):
         """
@@ -96,6 +100,7 @@ class RelativeFile():
         self.content_dict["academic_result"] = academic_result
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新科研成果成功")
+        return True
 
     def update_admission_requirement(self, admission_requirement):
         """
@@ -106,6 +111,7 @@ class RelativeFile():
         self.content_dict["admission_requirement"] = admission_requirement
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新招生要求成功")
+        return True
 
     def update_reservation_list(self, reservation_list: ReservationList):
         """
@@ -116,6 +122,7 @@ class RelativeFile():
         self.content_dict["reservation_list"].append(reservation_list.to_dict())
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新预约列表成功")
+        return True
 
     def get_base_info(self):
         """
