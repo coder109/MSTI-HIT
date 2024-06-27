@@ -125,7 +125,7 @@ class RelativeFile():
                                   r_email=reservation_list["r_email"],
                                   r_id=reservation_list["r_id"],
                                   r_status=reservation_list["r_status"])
-        self.content_dict["reservation_list"].append(tmp_rl)
+        self.update_reservation_list_one(self.content_dict["reservation_list"], tmp_rl.to_dict())
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新预约列表成功")
         return True
@@ -136,10 +136,17 @@ class RelativeFile():
         Args:
             reservation_list: 预约列表
         """
-        self.content_dict["reservation_list"].append(reservation_list.to_dict())
+        self.update_reservation_list_one(self.content_dict["reservation_list"], reservation_list.to_dict())
         format_json_dump(self.content_dict, self.path)
         print("[Info]更新预约列表成功")
         return True
+
+    def update_reservation_list_one(self, re_list, new_msg):
+        for index in range(len(re_list)):
+            if re_list[index]['id'] == new_msg['id']:
+                re_list[index] = new_msg
+                break
+        return re_list
 
     def get_base_info(self):
         """
