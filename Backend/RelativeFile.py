@@ -142,10 +142,14 @@ class RelativeFile():
         return True
 
     def update_reservation_list_one(self, re_list, new_msg):
+        find = 0
         for index in range(len(re_list)):
             if re_list[index]['id'] == new_msg['id']:
                 re_list[index] = new_msg
+                find = 1
                 break
+        if not find:
+            re_list.append(new_msg)
         return re_list
 
     def get_base_info(self):
