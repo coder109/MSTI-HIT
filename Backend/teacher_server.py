@@ -1,14 +1,14 @@
 
 import random
-import smtplib
-import uuid
-from datetime import datetime
 
+from datetime import datetime
+from flask_cors import CORS
 from flask import Flask, g, request, jsonify
 from MainDatabase import MainDatabase
 from RelativeFile import RelativeFile
 from send_qq_email import get_sender
 from ReservationList import ReservationList
+import smtplib
 
 
 # 应用工厂函数
@@ -16,8 +16,11 @@ def create_app():
     app = Flask(__name__)
 
     app.config['TEACHER_CLICK_COUNT'] = {}  # 初始化一个字典来存储点击量
+    # 初始化一个字典来存储每个老师的预约编号
+    app.config['TEACHER_RESERVATION_IDS'] = {}
     # 初始化邮件发送器
     app.config['SMTP_SENDER'] = get_sender()
+    CORS(app)
 
     # 配置数据库连接
     @app.before_request
@@ -282,6 +285,10 @@ def create_app():
         location = data.get('location')
         description = data.get('description')
         email = data.get('email')
+        print(teacher_id)
+        print(time)
+        print(location)
+        print(email)
 
         # 参数验证
         if not all([teacher_id, time, location, description, email]):
@@ -297,23 +304,28 @@ def create_app():
                 return jsonify({'update_successful': '找不到教师的相关文件路径'}), 404
 
             relative_file = RelativeFile(file_path)  # 创建 RelativeFile 对象
-
+            # 获取老师当前的最大预约编号，并加1作为新编号
+            reservation_id = get_next_reservation_id(teacher_id, app)
             # 创建预约对象
             reservation = ReservationList(
                 r_time=time,
                 r_place=location,
                 r_content=description,
                 r_email=email,
-                r_id=generate_reservation_id(),  # 生成编号
+                r_id=reservation_id,  # 生成编号
                 r_status=0
             )
-
+            print("编号")
+            print(reservation_id)
+            relative_file.update_reservation_list(reservation)
+            return jsonify({'update_successful': 'true'}), 200
+            '''
             # 更新预约列表
             if relative_file.update_reservation_list(reservation):
                 return jsonify({'update_successful': 'true'}), 200
             else:
                 return jsonify({'update_successful': '预约信息更新失败'}), 500
-
+            '''
         except Exception as e:
             # 日志记录异常信息，返回给用户通用错误信息
             app.logger.error(f"更新预约信息时发生错误：{e}")
@@ -324,7 +336,7 @@ def create_app():
     def send_email_code():
         data = request.json
         email = data.get('email')
-
+        print(data)
         # 参数验证
         if not email:
             return jsonify({'send_successful': 'false', 'evaluatecode': '邮箱参数缺失'}), 400
@@ -335,6 +347,8 @@ def create_app():
 
             # 获取邮件发送器
             sender = app.config.get('SMTP_SENDER')
+            print(code)
+            '''
             if sender is None:
                 # 处理 SMTP_SENDER 未初始化的情况
                 app.logger.error('邮件发送器未初始化')
@@ -346,6 +360,9 @@ def create_app():
                 # 记录日志，返回给用户通用错误信息
                 app.logger.error(f"邮件发送失败：邮箱地址为 {email}")
                 return jsonify({'send_successful': 'false', 'evaluatecode': '邮件发送失败'}), 500
+                '''
+            sender.sendemail(email, code)
+            return jsonify({'send_successful': 'true', 'evaluatecode': code}), 200
         except smtplib.SMTPException as e:
             # 记录SMTP异常
             app.logger.error(f"SMTP 邮件发送异常：{e}")
@@ -384,8 +401,10 @@ def create_app():
         active_reservations = []
         for reservations in reservation_lists:
             for reservation in reservations:
-                if reservation.get('status') != 3:
+                if reservation.get('status') != 4:
                     active_reservations.append(reservation)
+       
+        
 
         # 提取所需的预约信息列表
         date_no_list = [str(reservation.get('id')) for reservation in active_reservations]
@@ -408,7 +427,7 @@ def create_app():
         data = request.json
         teacher_id = data.get('teacher_id')
         date_no = data.get('date_no')
-
+        date_no = int(date_no)
         if not all([teacher_id, date_no]):
             return jsonify({'error': '缺少必要的参数'}), 400
 
@@ -425,12 +444,14 @@ def create_app():
 
             # 获取预约列表
             reservation_list = g.db.get_result_reservation_list(result_list)
+            reservation_list = [reservation for sublist in reservation_list for reservation in sublist]
             if not reservation_list:
                 return jsonify({'error': '没有找到预约列表'}), 404
 
             # 根据 date_no 获取预约信息
-            reservation_info = next((reservation for reservation in reservation_list if reservation.get('id') == date_no),
-                                    None)
+            reservation_info = next((reservation for reservation in reservation_list if reservation.get('id') == date_no),None)
+            # 使用列表推导式来查找第一个匹配的预约信息
+            # reservation_info = next((reservation for reservation in reservation_list if reservation['id'] == date_no),None)
             if not reservation_info:
                 return jsonify({'error': '预约编号不存在'}), 404
 
@@ -440,6 +461,7 @@ def create_app():
                 'description': reservation_info.get('content'),
                 'email': reservation_info.get('email')
             })
+
         except Exception as e:
             # 日志记录异常信息，返回给用户通用错误信息
             app.logger.error(f"获取预约信息时发生错误：{e}")
@@ -453,6 +475,8 @@ def create_app():
         date_no = data.get('date_no')
         status = data.get('status')
         reply = data.get('reply')
+        status = int(status)
+        date_no = int(date_no)
 
         if not all([teacher_id, date_no, status]):
             return jsonify({'update_successful': '缺少必要的参数'}), 400
@@ -472,20 +496,29 @@ def create_app():
 
             # 获取预约列表
             reservation_list = g.db.get_result_reservation_list(result_list)
+            reservation_list = [reservation for sublist in reservation_list for reservation in sublist]
             # 找到需要更新状态的预约
             reservation_to_update = next((reservation for reservation in reservation_list if reservation['id'] == date_no),
                                          None)
-            if not reservation_to_update:
-                return jsonify({'update_successful': '预约编号不存在'}), 404
-            # 更新预约状态和回复信息
-            reservation_to_update['status'] = status
-            reservation_to_update['reply'] = reply
-            # 将更新后的预约列表写回文件
-            relative_file.update_reservation_list(reservation_list)
+            print(reservation_to_update)
+            print("找到")
+            reservation_to_update_instance = ReservationList(
+                r_time=reservation_to_update['time'],
+                r_place=reservation_to_update['place'],
+                r_content=reservation_to_update['content'],
+                r_email=reservation_to_update['email'],
+                r_id=reservation_to_update['id'],
+                r_status=reservation_to_update['status']
+            )
 
+            # 更新状态和回复信息
+            reservation_to_update_instance.r_status = status
+            reservation_to_update_instance.r_reply = reply
+
+            # 将更新后的 ReservationList 实例传递给 update_reservation_list 方法
+            relative_file.update_reservation_list(reservation_to_update_instance)
             if status in [1, 2, 3]:  # 1, 2, 3分别代表接受、拒绝和更改预约信息的状态
                 send_reply_email(reservation_to_update['email'], status, reply)
-
             # 更新数据库中的教师更新时间
             if g.db.update_teacher(teacher_id, update_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S")):
                 return jsonify({'update_successful': 'true'})
@@ -501,7 +534,6 @@ def create_app():
     def get_hot_teachers():
         data = request.json
         belong = data.get('belong')
-
         if not belong:
             return jsonify({
                 'teacher_id': [],
@@ -510,8 +542,8 @@ def create_app():
                 'teacher_name': []
             }), 400
         try:
-            if belong == 'all':
-                teachers = g.db.query_teacher()
+            if belong == '无筛选':
+                teachers = g.db.query_teacher(None)
             else:
                 # 查询指定学院的所有教师信息
                 teachers = g.db.query_teacher(department=belong)
@@ -527,19 +559,26 @@ def create_app():
                 for teacher in teachers
             }
 
-            hot_teachers = sorted(teachers_click_count.items(), key=lambda item: item[1], reverse=True)[:8]
-
+            hot_teachers_id = sorted(teachers_click_count.items(), key=lambda item: item[1], reverse=True)[:8]
             # 构造返回数据
-            teacher_id = [teacher_id for teacher_id, _ in hot_teachers]
-            teacher_name = [g.db.get_result_name([teacher_id_])[0] for teacher_id_ in teacher_id]  # 获取教师姓名
-            pic_url = [g.db.get_result_avatar_path([teacher_id_])[0] for teacher_id_ in teacher_id]  # 获取教师头像URL
+            teacher_ids = [teacher_id for teacher_id, _ in hot_teachers_id]
+            hot_teachers = [g.db.query_teacher(t_id=teacher_id) for teacher_id in teacher_ids]
+            teacher_ids = [g.db.get_result_id(teacher) for teacher in hot_teachers]
+            teacher_ids = [item[0] for item in teacher_ids]
+            belong_to = [g.db.get_result_department(teacher) for teacher in hot_teachers]
+            belong_to = [item[0] for item in belong_to]
+            pic_urls = [g.db.get_result_avatar_path(teacher) for teacher in hot_teachers]
+            pic_urls = [item[0] for item in pic_urls]
+            teacher_names = [g.db.get_result_name(teacher) for teacher in hot_teachers]
+            teacher_names = [item[0] for item in teacher_names]
 
             return jsonify({
-                'teacher_id': teacher_id,
-                'belong_to': belong if belong != 'all' else '全校',
-                'pic_url': pic_url,
-                'teacher_name': teacher_name
+                'teacher_id': teacher_ids,
+                'belong_to': belong_to,
+                'pic_url': pic_urls,
+                'teacher_name': teacher_names
             })
+
         except Exception as e:
             # 日志记录异常信息，返回给用户通用错误信息
             app.logger.error(f"获取推荐教师时发生错误：{e}")
@@ -619,13 +658,16 @@ def create_app():
         return response_data, 200
 
     # 生成预约编号
-    def generate_reservation_id():
+    def get_next_reservation_id(teacher_id, app):
         """
-        生成预约编号的函数，使用 UUID4 算法生成唯一的预约编号。
-        返回一个字符串形式的预约编号。
+        获取老师的下一个预约编号。
         """
-        reservation_id = str(uuid.uuid4())
-        return reservation_id
+        # 检查老师是否已经有预约编号，如果没有，从0开始
+        if teacher_id not in app.config['TEACHER_RESERVATION_IDS']:
+            app.config['TEACHER_RESERVATION_IDS'][teacher_id] = 0
+        # 更新老师的预约编号
+        app.config['TEACHER_RESERVATION_IDS'][teacher_id] += 1
+        return app.config['TEACHER_RESERVATION_IDS'][teacher_id]
 
     # 回复邮件
     def send_reply_email(student_email, status, reply):
@@ -660,4 +702,5 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run(host='0.0.0.0',port=9876)
