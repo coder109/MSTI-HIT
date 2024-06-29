@@ -1,6 +1,6 @@
 
 import random
-
+import os
 from datetime import datetime
 from flask_cors import CORS
 from flask import Flask, g, request, jsonify
@@ -9,7 +9,7 @@ from RelativeFile import RelativeFile
 from send_qq_email import get_sender
 from ReservationList import ReservationList
 import smtplib
-
+import json
 
 # 应用工厂函数
 def create_app():
@@ -18,6 +18,12 @@ def create_app():
     app.config['TEACHER_CLICK_COUNT'] = {}  # 初始化一个字典来存储点击量
     # 初始化一个字典来存储每个老师的预约编号
     app.config['TEACHER_RESERVATION_IDS'] = {}
+    if os.path.exists('reservation_ids.txt'):
+        with open('reservation_ids.txt', 'r') as f:
+            app.config['TEACHER_RESERVATION_IDS'] = json.loads(f.read())
+    if os.path.exists('click_count.txt'):
+        with open('click_count.txt', 'r') as f:
+            app.config['TEACHER_CLICK_COUNT'] = json.loads(f.read())
     # 初始化邮件发送器
     app.config['SMTP_SENDER'] = get_sender()
     CORS(app)
@@ -31,6 +37,14 @@ def create_app():
     def initialize_click_count():
         if 'TEACHER_CLICK_COUNT' not in app.config:
             app.config['TEACHER_CLICK_COUNT'] = {}
+        if 'TEACHER_RESERVATION_IDS' not in app.config:
+            app.config['TEACHER_RESERVATION_IDS'] = {}
+        if os.path.exists('reservation_ids.txt'):
+            with open('reservation_ids.txt', 'r') as f:
+                app.config['TEACHER_RESERVATION_IDS'] = json.loads(f.read())
+        if os.path.exists('click_count.txt'):
+            with open('click_count.txt', 'r') as f:
+                app.config['TEACHER_CLICK_COUNT'] = json.loads(f.read())
 
     @app.teardown_request
     def teardown_request(exception):
@@ -667,6 +681,8 @@ def create_app():
             app.config['TEACHER_RESERVATION_IDS'][teacher_id] = 0
         # 更新老师的预约编号
         app.config['TEACHER_RESERVATION_IDS'][teacher_id] += 1
+        with open('reservation_ids.txt', 'w') as f:
+            f.write(json.dumps(app.config['TEACHER_RESERVATION_IDS']))
         return app.config['TEACHER_RESERVATION_IDS'][teacher_id]
 
     # 回复邮件
@@ -696,11 +712,12 @@ def create_app():
             app.config['TEACHER_CLICK_COUNT'][teacher_id] += 1
         else:
             app.config['TEACHER_CLICK_COUNT'][teacher_id] = 1
-
+        with open('click_count.txt', 'w') as f:
+            f.write(json.dumps(app.config['TEACHER_CLICK_COUNT']))
     return app
 
 
 if __name__ == '__main__':
     app = create_app()
     #app.run(debug=True)
-    app.run(host='0.0.0.0',port=9876)
+    app.run(host='0.0.0.0', port=9876)
