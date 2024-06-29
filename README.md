@@ -9,12 +9,12 @@ Make sure you have python3 installed, preferably python 3.12.3+.
 - [x] Basic User Interface
 - [x] Search Bar
   - [x] Fuzzy Search
+  - [x] Result Filtering
 - [x] Upload Avatars
 - [x] Update Information of teachers
 - [x] Appointment with teachers
   - [x] Email System
 - [x] Simple Recommendation System
-- [ ] ...
 
 # 🚀How to run?
 
