@@ -93,7 +93,7 @@
               "height": 28,
               "text": "",
               "fontSize": 25,
-              "color": "#FFFFFF",
+              "color": "rgba(0, 0, 0, 1)",
               "valign": "top",
               "padding": "0,0,0,0"
             },
@@ -108,7 +108,7 @@
               "visible": false,
               "text": "",
               "fontSize": 25,
-              "color": "#FFFFFF",
+              "color": "rgba(0, 0, 0, 1)",
               "valign": "top",
               "padding": "0,0,0,0"
             },
@@ -123,7 +123,7 @@
               "visible": false,
               "text": "",
               "fontSize": 25,
-              "color": "#FFFFFF",
+              "color": "rgba(0, 0, 0, 1)",
               "valign": "top",
               "padding": "0,0,0,0"
             },
@@ -138,38 +138,84 @@
               "visible": false,
               "text": "",
               "fontSize": 22,
-              "color": "#FFFFFF",
+              "color": "rgba(0, 0, 0, 1)",
               "valign": "top",
               "padding": "0,0,0,0"
             }
           ]
+        }
+      ]
+    },
+    {
+      "_$id": "wz00mq7k",
+      "_$type": "Button",
+      "name": "Button",
+      "x": 1770,
+      "y": 1001,
+      "width": 120,
+      "height": 56,
+      "_mouseState": 2,
+      "right": 30,
+      "skin": "res://4242dae5-6013-4371-9c99-861b789d4a9d",
+      "label": "返回",
+      "labelFont": "SourceHanSansSC-Regular",
+      "labelSize": 25,
+      "labelColors": "#ffffff,#ffffff,#ffffff",
+      "labelAlign": "center",
+      "labelVAlign": "middle",
+      "_$comp": [
+        {
+          "_$type": "249528d4-9786-4a2b-b76d-685d11a5b47e",
+          "scriptPath": "../src/Bclose.ts",
+          "now": "date_list.ls",
+          "from": ""
+        }
+      ]
+    },
+    {
+      "_$id": "u00cj8a9",
+      "_$type": "Button",
+      "name": "Button",
+      "x": 1622,
+      "y": 999,
+      "width": 120,
+      "height": 56,
+      "_mouseState": 2,
+      "right": 178,
+      "skin": "res://92a393b3-d00c-4486-ae48-e233dc5b8c37",
+      "label": "刷新",
+      "labelFont": "SourceHanSansSC-Regular",
+      "labelSize": 25,
+      "labelColors": "#ffffff,#ffffff,#ffffff",
+      "labelAlign": "center",
+      "labelVAlign": "middle",
+      "_$comp": [
+        {
+          "_$type": "e1bcd870-388b-44fc-b397-68053a324acb",
+          "scriptPath": "../src/refresh.ts"
         },
         {
-          "_$id": "wz00mq7k",
-          "_$type": "Button",
-          "name": "Button",
-          "x": 1700,
-          "y": 915,
+          "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+          "scriptPath": "../src/Button_pointer.ts"
+        }
+      ],
+      "_$child": [
+        {
+          "_$id": "au26ek5a",
+          "_$var": true,
+          "_$type": "Label",
+          "name": "tid",
+          "x": -702.9999999999999,
+          "y": -435,
           "width": 120,
-          "height": 56,
-          "_mouseState": 2,
-          "right": -138,
-          "bottom": -79,
-          "skin": "res://4242dae5-6013-4371-9c99-861b789d4a9d",
-          "label": "返回",
-          "labelFont": "SourceHanSansSC-Regular",
-          "labelSize": 25,
-          "labelColors": "#ffffff,#ffffff,#ffffff",
-          "labelAlign": "center",
-          "labelVAlign": "middle",
-          "_$comp": [
-            {
-              "_$type": "249528d4-9786-4a2b-b76d-685d11a5b47e",
-              "scriptPath": "../src/Bclose.ts",
-              "now": "date_list.ls",
-              "from": ""
-            }
-          ]
+          "height": 28,
+          "visible": false,
+          "_mouseState": 1,
+          "text": "",
+          "fontSize": 22,
+          "color": "#FFFFFF",
+          "valign": "top",
+          "padding": "0,0,0,0"
         }
       ]
     }

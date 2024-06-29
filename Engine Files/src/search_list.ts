@@ -77,7 +77,15 @@ export class search_list extends search_listBase {
             this.search_input.text = this.search_input.text.substring(0, this.search_input.text.length-9)
         }
         console.log(e);
-        Laya.LocalStorage.setItem('diglogparam','网络错误，请稍后再试')
-        Laya.Scene.open('resources/dialog.lh', false)
+        if(e == '[404]NOT FOUND:http://101.42.182.89:9876/api/search'){
+            this.search_input.text = this.search_input.text.substring(0, this.search_input.text.length-9)
+            Laya.LocalStorage.setItem('diglogparam','未找到相关教师')
+            Laya.Scene.open('resources/dialog.lh', false)
+        }
+        else{
+            Laya.LocalStorage.setItem('diglogparam','网络错误，请稍后再试')
+            Laya.Scene.open('resources/dialog.lh', false)
+        }
+
     }
 }

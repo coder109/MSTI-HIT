@@ -668,6 +668,50 @@
           ]
         }
       ]
+    },
+    {
+      "_$id": "atm3v2xc",
+      "_$var": true,
+      "_$type": "Image",
+      "name": "teacher_temp",
+      "x": 1712,
+      "y": 794,
+      "width": 157,
+      "height": 160,
+      "visible": false,
+      "_mouseState": 1,
+      "top": 794,
+      "centerX": 830,
+      "skin": "res://efcc754e-fe7d-4dee-918b-60c77cf1b0d3",
+      "color": "#ffffff",
+      "_$comp": [
+        {
+          "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+          "scriptPath": "../src/Button_pointer.ts"
+        }
+      ],
+      "_$child": [
+        {
+          "_$id": "hbdqt3bs",
+          "_$type": "Label",
+          "name": "Lteacher",
+          "x": -32,
+          "y": 175,
+          "width": 221,
+          "height": 21,
+          "top": 175,
+          "centerX": 0,
+          "text": "教师",
+          "font": "MicrosoftYaHei",
+          "fontSize": 20,
+          "color": "rgba(0, 0, 0, 1)",
+          "fitContent": "height",
+          "align": "center",
+          "valign": "middle",
+          "wordWrap": true,
+          "padding": "0,0,0,0"
+        }
+      ]
     }
   ]
 }

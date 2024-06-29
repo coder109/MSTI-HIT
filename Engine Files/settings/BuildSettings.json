@@ -8,7 +8,10 @@
     "res://9b931ecf-fde9-44dd-acf3-15f8dc807965",
     "res://e6ad8bdc-9d97-4232-9a78-874a0cb1dccf",
     "res://def15815-636a-4b74-a4c7-9a8e7973c30c",
-    "res://c8128509-722d-492b-9154-176b3fd0a60e"
+    "res://c8128509-722d-492b-9154-176b3fd0a60e",
+    "res://f8433ccf-f151-49fc-910b-a402abee71bc",
+    "res://98fff514-13b6-4204-8b64-ee8a13c85aae",
+    "res://b38140e5-3f10-403d-9ae8-23475f316a7d"
   ],
   "web": {
     "allowTextureCompressedFormat": false,
@@ -22,5 +25,8 @@
       "x86-64": false
     },
     "exportFormat": "APK"
+  },
+  "wxgame": {
+    "appid": "wx497ae27f633bfe93"
   }
 }

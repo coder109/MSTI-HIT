@@ -31,17 +31,19 @@ export class date_list_box extends Laya.Script {
     //onDestroy(): void {}
 
     //每帧更新时执行，尽量不要在这里写大循环逻辑或者使用getComponent方法
-    onUpdate(): void {
-        var no2status:{[key:string]:string} = {"0":'未处理', "1":'已同意', "2":'已拒绝', "3":'更改预约信息', "4":'已完成'};
-        var stroage_msg = Laya.LocalStorage.getJSON('date_update')
-        if (stroage_msg != null){
-            if(this.teacher_id==stroage_msg['teacher_id'] && this.date_no==stroage_msg['date_no']){
-                (this.owner.getChildByName('date_status')as Laya.Label).text = no2status[stroage_msg['status']]
-                this.date_status = stroage_msg['status']
-                Laya.LocalStorage.removeItem('date_update')
-            }
-        }
-    }
+    // onUpdate(): void {
+    //     var no2status:{[key:string]:string} = {"0":'未处理', "1":'已同意', "2":'已拒绝', "3":'更改预约信息', "4":'已完成'};
+    //     var stroage_msg = Laya.LocalStorage.getJSON('date_update')
+    //     if (stroage_msg != null){
+    //         if(this.teacher_id==stroage_msg['teacher_id'] && this.date_no==stroage_msg['date_no']){
+                // (this.owner.getChildByName('date_status')as Laya.Label).text = "[" + no2status[stroage_msg['status']] + "]"
+                // this.date_status = stroage_msg['status']
+                // Laya.LocalStorage.removeItem('date_update')
+    //             this.date_status = stroage_msg['status']
+    //             Laya.LocalStorage.removeItem('date_update')
+    //         }
+    //     }
+    // }
 
     //每帧更新时执行，在update之后执行，尽量不要在这里写大循环逻辑或者使用getComponent方法
     //onLateUpdate(): void {}
@@ -63,6 +65,7 @@ export class date_list_box extends Laya.Script {
         data['teacher_id'] = this.teacher_id
         data['date_no'] = this.date_no
         data['date_status'] = this.date_status
+        Laya.Scene.close('date_list.ls')
         Laya.Scene.open('date_details.ls', false, data)
     }
 

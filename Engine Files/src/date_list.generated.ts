@@ -6,5 +6,6 @@
  */
 export class date_listBase extends Laya.Scene {
     public List!: Laya.List;
+    public tid!: Laya.Label;
 }
 

@@ -17,5 +17,7 @@ export class date_list extends date_listBase {
             data2push.push({no: "预约" + date_no_list[i], msg: email_list[i]+" "+time_list[i]+" "+location_list[i]+" "+"["+ no2status[status_list[i]] +"]", date_no: date_no_list[i], teacher_id: teacher_id,date_status: status_list[i]});
         }
         this.List.array = data2push;
+        this.tid.text = teacher_id;
+
     }
 }

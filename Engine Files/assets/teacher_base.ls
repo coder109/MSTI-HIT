@@ -1470,6 +1470,10 @@
         {
           "_$type": "19f5d462-32f2-4f49-8fc8-389155b2efe7",
           "scriptPath": "../src/Bdate.ts"
+        },
+        {
+          "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+          "scriptPath": "../src/Button_pointer.ts"
         }
       ]
     }

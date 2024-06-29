@@ -37,7 +37,7 @@ export class login extends loginBase {
         if(data['issuccessful']){
             Laya.LocalStorage.setItem('username', this.Tusername.text);
             Laya.LocalStorage.setItem('login', 'true');
-            Laya.LocalStorage.setItem('diglogparam', '欢迎登录 '+ this.Tusername.text);
+            Laya.LocalStorage.setItem('diglogparam', '欢迎登录');
             Laya.Scene.open('resources/dialog.lh', false);
             data['from'] = 'hello.ls';
             Laya.Scene.open('teacher_base.ls', false, data);

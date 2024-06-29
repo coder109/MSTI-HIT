@@ -28,5 +28,6 @@ export class helloBase extends Laya.Scene {
     public Lteacher7!: Laya.Label;
     public Iteacher8!: Laya.Image;
     public Lteacher8!: Laya.Label;
+    public teacher_temp!: Laya.Image;
 }
 

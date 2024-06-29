@@ -19,7 +19,7 @@ export class date_details extends date_detailsBase {
 	    // 'email':预约者邮箱(str)}
         this.time.text = param['time']
         this.location.text = param['location']
-        this.description.text = param['description']
+        this.description.text = param['description'].replace('\n','<br />')
         this.email.text = param['email']
         var status = Number(this.status);
         switch(status)
@@ -30,31 +30,38 @@ export class date_details extends date_detailsBase {
                 this.Bagree.disabled = true;
                 this.Brefuse.disabled = true;
                 this.Bchange.disabled = true;
-                this.Brefuse.gray = true;
-                this.Bchange.gray = true;
                 this.Bfinish.disabled = false;
-                this.Bfinish.gray = false;
                 break;
             case 2:
                 this.Bagree.disabled = true;
                 this.Brefuse.disabled = true;
                 this.Bchange.disabled = true;
-                this.Bagree.gray = true;
-                this.Bchange.gray = true;
                 this.Bfinish.disabled = false;
-                this.Bfinish.gray = false;
+
                 break;
             case 3:
                 this.Bagree.disabled = true;
                 this.Brefuse.disabled = true;
                 this.Bchange.disabled = true;
-                this.Bagree.gray = true;
-                this.Brefuse.gray = true;
                 this.Bfinish.disabled = false;
-                this.Bfinish.gray = false;
+
             default:
                 break;
         }
+    }
+
+    batch_disable(){
+        this.Bagree.disabled = true;
+        this.Brefuse.disabled = true;
+        this.Bchange.disabled = true;
+        this.Bgoback.disabled = true;
+    }
+
+    batch_enable(){
+        this.Bagree.disabled = false;
+        this.Brefuse.disabled = false;
+        this.Bchange.disabled = false;
+        this.Bgoback.disabled = false;
     }
 
     onAwake(): void {
@@ -62,9 +69,25 @@ export class date_details extends date_detailsBase {
         this.Brefuse.on(Laya.Event.CLICK, this, this.click_button,[2])
         this.Bchange.on(Laya.Event.CLICK, this, this.click_button,[3])
         this.Bfinish.on(Laya.Event.CLICK, this, this.click_button,[4])
+        this.Bgoback.on(Laya.Event.CLICK, this, this.goback)
     }
 
+    goback(): void{
+        var data = {'teacher_id': this.teacher_id}
+        this.send_post_and_get_return('api/getdate_list', data, this.goto_date_callback);
+    }
+
+    goto_date_callback(data:any): void{
+        var date_no_list = data['date_no_list'];
+        data['teacher_id'] = this.teacher_id;
+        Laya.Scene.close('date_details.ls')
+        Laya.Scene.open('date_list.ls', false, data)
+    }
+
+
     click_button(status:number): void{
+        this.Iwait.visible = true;
+        this.batch_disable();
         var data = {
             'teacher_id': this.teacher_id,
             'date_no': this.date_no,
@@ -77,6 +100,8 @@ export class date_details extends date_detailsBase {
 
     click_button_callback(data:any): void{
         var update_successful = data['update_successful']
+        this.Iwait.visible = false;
+        this.batch_enable();
         if(update_successful == 'true'){
             Laya.LocalStorage.setItem('diglogparam','操作成功')
             Laya.Scene.open('resources/dialog.lh', false)
@@ -97,6 +122,9 @@ export class date_details extends date_detailsBase {
     }
 
     httpRequestError(e:any): void{
+        this.Iwait.visible = false;
+        this.batch_enable();
+        this.update_status(Number(this.status))
         console.log(e);
         Laya.LocalStorage.setItem('diglogparam','网络错误，请稍后再试')
         Laya.Scene.open('resources/dialog.lh', false)
@@ -110,35 +138,26 @@ export class date_details extends date_detailsBase {
                 this.Bagree.disabled = true;
                 this.Brefuse.disabled = true;
                 this.Bchange.disabled = true;
-                this.Brefuse.gray = true;
-                this.Bchange.gray = true;
                 this.Bfinish.disabled = false;
-                this.Bfinish.gray = false;
+
                 break;
             case 2:
                 this.Bagree.disabled = true;
                 this.Brefuse.disabled = true;
                 this.Bchange.disabled = true;
-                this.Bagree.gray = true;
-                this.Bchange.gray = true;
                 this.Bfinish.disabled = false;
-                this.Bfinish.gray = false;
+
                 break;
             case 3:
                 this.Bagree.disabled = true;
                 this.Brefuse.disabled = true;
                 this.Bchange.disabled = true;
-                this.Bagree.gray = true;
-                this.Brefuse.gray = true;
                 this.Bfinish.disabled = false;
-                this.Bfinish.gray = false;
+
             case 4:
                 this.Bagree.disabled = true;
                 this.Brefuse.disabled = true;
                 this.Bchange.disabled = true;
-                this.Bagree.gray = true;
-                this.Brefuse.gray = true;
-                this.Bchange.gray = true;
                 this.Bfinish.disabled = true;
             default:
                 break;

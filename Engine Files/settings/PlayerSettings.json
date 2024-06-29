@@ -3,6 +3,7 @@
     "designWidth": 1920,
     "designHeight": 1080,
     "scaleMode": "fixedauto",
+    "screenMode": "horizontal",
     "backgroundColor": "rgba(236, 239, 244, 1)"
   },
   "2D": {

@@ -5,7 +5,6 @@
  * date.ls
  */
 export class dateBase extends Laya.Scene {
-    public Bgoback!: Laya.Button;
     public Tdata!: Laya.TextArea;
     public time!: Laya.TextInput;
     public location!: Laya.TextInput;
@@ -14,5 +13,6 @@ export class dateBase extends Laya.Scene {
     public Bsendcode!: Laya.Button;
     public Bevaluate!: Laya.Button;
     public Bcommite!: Laya.Button;
+    public Bgoback!: Laya.Button;
 }
 

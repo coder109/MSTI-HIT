@@ -118,7 +118,7 @@ export class teacher_base extends teacher_baseBase {
     }
 
     click_date(): void{
-        if(this.Bdate.label="预约"){
+        if(this.Bdate.label=="预约"){
             Laya.Scene.open('date.ls', false, this.Tid)
         }
         else{

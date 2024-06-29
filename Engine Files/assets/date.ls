@@ -39,31 +39,6 @@
       "color": "#ffffff"
     },
     {
-      "_$id": "vxz3x8nu",
-      "_$var": true,
-      "_$type": "Button",
-      "name": "Bgoback",
-      "x": 1768,
-      "y": 1001.0000000000002,
-      "width": 120,
-      "height": 47,
-      "_mouseState": 2,
-      "centerX": 868,
-      "skin": "res://4242dae5-6013-4371-9c99-861b789d4a9d",
-      "label": "返回",
-      "labelFont": "SourceHanSansSC-Regular",
-      "labelSize": 25,
-      "labelColors": "#ffffff,#ffffff,#ffffff",
-      "labelAlign": "center",
-      "labelVAlign": "middle",
-      "_$comp": [
-        {
-          "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
-          "scriptPath": "../src/Button_pointer.ts"
-        }
-      ]
-    },
-    {
       "_$id": "qabfbbq6",
       "_$type": "HBox",
       "name": "HBox",
@@ -402,11 +377,12 @@
               "_$type": "HBox",
               "name": "HBox(4)",
               "x": 28,
-              "y": 680,
+              "y": 752,
               "width": 790,
               "height": 118,
               "_mouseState": 2,
-              "space": 184,
+              "bottom": 9,
+              "space": 31,
               "align": "middle",
               "_$child": [
                 {
@@ -430,7 +406,7 @@
                   "_$var": true,
                   "_$type": "Button",
                   "name": "Bcommite",
-                  "x": 634,
+                  "x": 481,
                   "y": 27.5,
                   "width": 139,
                   "height": 63,
@@ -439,6 +415,30 @@
                   "label": "预约",
                   "labelFont": "SourceHanSansSC-Regular",
                   "labelSize": 26,
+                  "labelColors": "#ffffff,#ffffff,#ffffff",
+                  "labelAlign": "center",
+                  "labelVAlign": "middle",
+                  "_$comp": [
+                    {
+                      "_$type": "84368dcb-267f-4636-a3d3-a30262f92f3e",
+                      "scriptPath": "../src/Button_pointer.ts"
+                    }
+                  ]
+                },
+                {
+                  "_$id": "vxz3x8nu",
+                  "_$var": true,
+                  "_$type": "Button",
+                  "name": "Bgoback",
+                  "x": 651,
+                  "y": 27.5,
+                  "width": 139,
+                  "height": 63,
+                  "_mouseState": 2,
+                  "skin": "res://4242dae5-6013-4371-9c99-861b789d4a9d",
+                  "label": "返回",
+                  "labelFont": "SourceHanSansSC-Regular",
+                  "labelSize": 25,
                   "labelColors": "#ffffff,#ffffff,#ffffff",
                   "labelAlign": "center",
                   "labelVAlign": "middle",

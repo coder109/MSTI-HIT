@@ -17,10 +17,10 @@ export class hello extends helloBase {
         this.Iteacher6.on(Laya.Event.CLICK,this,this.goto_teacher, [5]);
         this.Iteacher7.on(Laya.Event.CLICK,this,this.goto_teacher, [6]);
         this.Iteacher8.on(Laya.Event.CLICK,this,this.goto_teacher, [7]);
-        this.selectBox2.on(Laya.Event.CHANGE,this,this.get_hot_teacher_list, [this.selectBox2.selectedLabel]);
+        this.selectBox2.on(Laya.Event.CHANGE,this,this.get_hot_teacher_list, ["select"]);
         
         this.Blogin.on(Laya.Event.CLICK,this,this.click_login);
-        // this.Iteacher1.skin='http://127.0.0.1:8848/20200706204152_gouvc.jpg'; just for example
+        // this.Iteacher1.skin='http://101.42.182.89:8848/20200706204152_gouvc.jpg'; just for example
         this.check_login();
 
         // var data:{[key:string]:Array<string>} = {};
@@ -59,7 +59,10 @@ export class hello extends helloBase {
         if (belong == '无筛选'){
             belong='all'
         }
-        this.send_post_and_get_return('api/api/gethot', {'belong':belong}, this.get_hot_teacher_list_callback);
+        else{
+            belong = this.selectBox2.selectedLabel
+        }
+        this.send_post_and_get_return('api/gethot', {'belong':belong}, this.get_hot_teacher_list_callback);
     }
 
     get_hot_teacher_list_callback(data:any){
@@ -68,30 +71,58 @@ export class hello extends helloBase {
         //     'belong_to':一个搜索结果的所有教师所在学院(str)的数组(list), 
         //     'pic_url':一个搜索结果的所有教师头像的url(str)数组(list),
         // 'teacher_name':一个搜索结果的所有教师姓名(str)的数组(list)}
-    
+
         this.hot_teacher_list= data['teacher_id'];
         var teacher_name = data['teacher_name'];
         var pic_url = data['pic_url'];
         var belong_to = data['belong_to'];
-        this.Iteacher1.skin = "http://101.42.182.89:8848"+pic_url[0].substring(1,pic_url[0].length).replace("\\","/")
-        this.Iteacher2.skin = "http://101.42.182.89:8848"+pic_url[1].substring(1,pic_url[1].length).replace("\\","/")
-        this.Iteacher3.skin = "http://101.42.182.89:8848"+pic_url[2].substring(1,pic_url[2].length).replace("\\","/")
-        this.Iteacher4.skin = "http://101.42.182.89:8848"+pic_url[3].substring(1,pic_url[3].length).replace("\\","/")
-        this.Iteacher5.skin = "http://101.42.182.89:8848"+pic_url[4].substring(1,pic_url[4].length).replace("\\","/")
-        this.Iteacher6.skin = "http://101.42.182.89:8848"+pic_url[5].substring(1,pic_url[5].length).replace("\\","/")
-        this.Iteacher7.skin = "http://101.42.182.89:8848"+pic_url[6].substring(1,pic_url[6].length).replace("\\","/")
-        this.Iteacher8.skin = "http://101.42.182.89:8848"+pic_url[7].substring(1,pic_url[7].length).replace("\\","/")
-        this.Lteacher1.text = teacher_name[0] + '\n' + belong_to[0];
-        this.Lteacher2.text = teacher_name[1] + '\n' + belong_to[1];
-        this.Lteacher3.text = teacher_name[2] + '\n' + belong_to[2];
-        this.Lteacher4.text = teacher_name[3] + '\n' + belong_to[3];
-        this.Lteacher5.text = teacher_name[4] + '\n' + belong_to[4];
-        this.Lteacher6.text = teacher_name[5] + '\n' + belong_to[5];
-        this.Lteacher7.text = teacher_name[6] + '\n' + belong_to[6];
-        this.Lteacher8.text = teacher_name[7] + '\n' + belong_to[7];
+
+        this.change_skin(this.Iteacher1, pic_url, 0)
+        this.change_skin(this.Iteacher2, pic_url, 1)
+        this.change_skin(this.Iteacher3, pic_url, 2)
+        this.change_skin(this.Iteacher4, pic_url, 3)
+        this.change_skin(this.Iteacher5, pic_url, 4)
+        this.change_skin(this.Iteacher6, pic_url, 5)
+        this.change_skin(this.Iteacher7, pic_url, 6)
+        this.change_skin(this.Iteacher8, pic_url, 7)
+        this.change_text(this.Lteacher1, teacher_name, belong_to, 0)
+        this.change_text(this.Lteacher2, teacher_name, belong_to, 1)
+        this.change_text(this.Lteacher3, teacher_name, belong_to, 2)
+        this.change_text(this.Lteacher4, teacher_name, belong_to, 3)
+        this.change_text(this.Lteacher5, teacher_name, belong_to, 4)
+        this.change_text(this.Lteacher6, teacher_name, belong_to, 5)
+        this.change_text(this.Lteacher7, teacher_name, belong_to, 6)
+        this.change_text(this.Lteacher8, teacher_name, belong_to, 7)
         this.HBox1.mouseEnabled = true;
         this.HBox2.mouseEnabled = true;
     }
+
+    change_skin(img:Laya.Image, arr:any, index:number): void{
+        try{
+            var pic_url = arr[index]
+            img.skin = "http://101.42.182.89:8848"+pic_url.substring(1,pic_url.length).replace("\\","/")
+        }
+        catch(e){
+            img.skin = this.teacher_temp.skin
+        }
+    }
+
+    change_text(label:Laya.Label, arr1:any, arr2:any, index:number): void{
+        try{
+            var text = arr1[index] + '\n' + arr2[index]
+            if (arr1[index]== undefined || arr2[index] == undefined) {
+                label.text = '教师'
+            }
+            else{
+                label.text = text
+            }
+            
+        }
+        catch(e){
+            label.text = '教师'
+        }
+    }
+        
 
     click_search(): void{
         if(this.search_input.text==''){
@@ -189,7 +220,7 @@ export class hello extends helloBase {
             Laya.Scene.open('resources/dialog.lh', false)
         }
         else if(e == '[404]NOT FOUND:http://101.42.182.89:9876/api/gethot'){
-            Laya.LocalStorage.setItem('diglogparam','网络错误，获取热门教师失败')
+            Laya.LocalStorage.setItem('diglogparam','获取热门教师失败')
             Laya.Scene.open('resources/dialog.lh', false)
         }
         else{
